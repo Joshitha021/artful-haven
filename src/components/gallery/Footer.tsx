@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Instagram, Facebook, Twitter, Youtube } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const socialLinks = [
   { icon: Instagram, href: "#", label: "Instagram" },
@@ -11,15 +12,30 @@ const socialLinks = [
 const footerLinks = [
   {
     title: "Gallery",
-    links: ["Collection", "Exhibitions", "Artists", "Events"],
+    links: [
+      { label: "Collection", href: "/#collection" },
+      { label: "Exhibitions", href: "/#exhibitions" },
+      { label: "Artists", href: "/#artists" },
+      { label: "Events", href: "#" },
+    ],
   },
   {
-    title: "Visit",
-    links: ["Hours & Location", "Private Tours", "Accessibility", "Parking"],
+    title: "Explore",
+    links: [
+      { label: "Blog", href: "/blog" },
+      { label: "About Us", href: "/about" },
+      { label: "Private Tours", href: "#" },
+      { label: "Accessibility", href: "#" },
+    ],
   },
   {
     title: "Support",
-    links: ["Membership", "Donate", "Corporate Partners", "Volunteer"],
+    links: [
+      { label: "Membership", href: "#" },
+      { label: "Donate", href: "#" },
+      { label: "Corporate Partners", href: "#" },
+      { label: "Volunteer", href: "#" },
+    ],
   },
 ];
 
@@ -37,10 +53,12 @@ export const Footer = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="font-heading text-3xl tracking-[0.15em] text-foreground mb-4">
-                AURORA
-              </h3>
-              <p className="text-muted-foreground mb-8 max-w-sm leading-relaxed">
+              <Link to="/" className="inline-block">
+                <h3 className="font-heading text-3xl tracking-[0.15em] text-foreground hover:text-primary transition-colors">
+                  AURORA
+                </h3>
+              </Link>
+              <p className="text-muted-foreground mt-4 mb-8 max-w-sm leading-relaxed">
                 A sanctuary for contemporary art, dedicated to fostering creative 
                 dialogue and celebrating visionary artists from around the world.
               </p>
@@ -77,13 +95,22 @@ export const Footer = () => {
                   </h4>
                   <ul className="space-y-4">
                     {column.links.map((link) => (
-                      <li key={link}>
-                        <a
-                          href="#"
-                          className="text-muted-foreground hover:text-primary transition-colors"
-                        >
-                          {link}
-                        </a>
+                      <li key={link.label}>
+                        {link.href.startsWith("/") && !link.href.includes("#") ? (
+                          <Link
+                            to={link.href}
+                            className="text-muted-foreground hover:text-primary transition-colors"
+                          >
+                            {link.label}
+                          </Link>
+                        ) : (
+                          <a
+                            href={link.href}
+                            className="text-muted-foreground hover:text-primary transition-colors"
+                          >
+                            {link.label}
+                          </a>
+                        )}
                       </li>
                     ))}
                   </ul>
